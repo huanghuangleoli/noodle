@@ -1,3 +1,10 @@
+data/journal/
+data/local.0
+data/local.ns
+data/mongod.lock
+data/test.0
+data/test.ns
+
 lib-cov
 *.seed
 *.log
