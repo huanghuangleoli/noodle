@@ -89,12 +89,51 @@ function createIndexForPost() {
               return console.error('failed ensureIndex with error', error);
             }
             console.log('ensureIndex succeeded with response', res);
+            db.close();
+            mongoClient.close();
           });
     });
   });
 }
 
+function createIndexForElement() {
+  var mongoClient = new MongoClient(new Server('localhost', 27017));
+  var db;
+  mongoClient.open(function (err, mongoClient) {
+    db = mongoClient.db(dbName);
+    db.collection('elements', function (colerr, collection) {
+      collection.createIndex({
+            name: 'text',
+            tags: 'text',
+            category_1: 'text',
+            category_2: 'text',
+            category_3: 'text'
+          },
+          {
+            unique: false,
+            background: true,
+            weights: {
+              name: 10,
+              tags: 5,
+              category_1: 3,
+              category_2: 2,
+              category_3: 1
+            },
+            w: 1
+          },
+          function (error, res) {
+            if (error) {
+              return console.error('failed ensureIndex with error', error);
+            }
+            console.log('ensureIndex succeeded with response', res);
+            db.close();
+            mongoClient.close();
+          });
+    });
+  });
+}
 //clearDB();
 //loadFromJsonFile();
 //createIndexForPost();
+createIndexForElement();
 
