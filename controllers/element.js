@@ -3,7 +3,7 @@ var secrets = require('../config/secrets');
 var mongoose = require('mongoose');
 var Element = require('../models/Element');
 
-var NUM_OF_ELEMENTS = 2;
+var NUM_OF_ELEMENTS = 10;
 
 /**
  * GET /elements
