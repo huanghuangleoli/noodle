@@ -2,41 +2,43 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
+// Sorted by alphabet.
 var postSchema = new Schema({
-  title: {
-    type: String
-  },
+  // __v
+  // _id
+  createdAt: { type: Date },
+  creator: ObjectId,
   creditTo: { type: String },
   creditURL: { type: String },
-  photo: { type: String },
-  URL: { type: String },
-  likes: { type: Number },
-  viewed: { type: Number },
-  time: {
-    prepare: {type: Number},
-    inactive: {type: Number},
-    cook: {type: Number}
-  },
-  steps: [ String ],
-  video: { type: String },
+  dishType: [ String ],
   elements: [{
-    id: { type: ObjectId },
     name: { type: String },
     unit: { type: String },
     amount: { type: Number },
-    addi: { type: String }
+    addi: { type: String },
+    id: { type: ObjectId }
   }],
-  dishType: [ String ],
+  intro: { type: String },
+  likes: { type: Number },
   occasions: [ String],
-  specials: [ String ],
   origins: { type: String },
-  tags: { type: [ String ] },
+  photo: { type: String },
+  serving: { type: String},
+  specials: [ String ],
   state: { type: String },
-  creator: ObjectId,
-  createdAt: { type: Date },
+  steps: [ String ],
+  tags: { type: [ String ] },
+  time: {
+    prepare: { type: Number },
+    inactive: { type: Number },
+    cook: { type: Number }
+  },
+  title: { type: String },
   updateAt: { type: Date },
-  repost: { type: ObjectId },
-  service: [ ObjectId ]
+  url: { type: String },
+  video: { type: String },
+  viewed: { type: Number },
+  repost: { type: ObjectId }
 });
 
 module.exports.postSchema = postSchema;

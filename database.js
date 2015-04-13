@@ -13,6 +13,8 @@ var collections = [
   'vendors'
 ];
 
+// Deprecated!
+// Use mongo to clean up.
 function clearDB() {
   collections.forEach(function(collection) {
     var mongoClient = new MongoClient(new Server('localhost', 27017));
@@ -31,6 +33,11 @@ function clearDB() {
   });
 }
 
+
+// Deprecated!
+// New json format is NOT valid.
+// The only way of importing it is
+// mongoimport --db dinneract --collection elements --file elements.json
 function loadFromJsonFile() {
   collections.forEach(function(collection) {
     var mongoClient = new MongoClient(new Server('localhost', 27017));
@@ -68,12 +75,12 @@ function createIndexForPost() {
     db = mongoClient.db(dbName);
     db.collection('posts', function (colerr, collection) {
       collection.createIndex({
-            title: 'text',
-            tags: 'text',
             dishType: 'text',
             occasions: 'text',
+            origins: 'text',
             specials: 'text',
-            origins: 'text'
+            tags: 'text',
+            title: 'text'
           },
           {
             unique: false,
@@ -132,8 +139,8 @@ function createIndexForElement() {
     });
   });
 }
-//clearDB();
-//loadFromJsonFile();
+
 //createIndexForPost();
 createIndexForElement();
 
+// mongoimport --db dinneract --collection elements --file elements.json

@@ -2,24 +2,23 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
+// Sorted by alphabet.
 var elementSchema = new Schema({
-  name : { type: String },
   brand : { type: String },
-  vendor : { type: ObjectId },
-  thumb : { type: String },
-  photos : [ String ],
-  intro : { type: String },
+  category_1 : { type: String },
+  category_2 : { type: String },
+  category_3 : { type: String },
+  certificates : [ String ],
+  createAt : { type: Date },
+  creator : { type: ObjectId },
   ingredients : { type: String },
-  category_1 : { type: String},
-  category_2 : { type: String},
-  category_3 : { type: String},
-  certificates : [ String],
+  intro : { type: String },
+  name : { type: String },
+  photos : [ String ],
+  state : { type: String },
   tags : [ String ],
-  state : String,
-  creator : { type: ObjectId},
-  createAt : Date,
-  updateAt : Date,
-  usedIn : [ObjectId]
+  thumb : { type: String },
+  updateAt : { type: Date }
 });
 
 module.exports.elementSchema = elementSchema;
