@@ -3,7 +3,7 @@ var secrets = require('../config/secrets');
 var mongoose = require('mongoose');
 var Post = require('../models/Post');
 
-var NUM_OF_POSTS = 2;
+var NUM_OF_POSTS = 10;
 
 /**
  * GET /posts

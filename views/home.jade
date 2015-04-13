@@ -3,6 +3,15 @@ extends layout
 block content
   h1 Posts test
     h3
-      a(href='/posts') /posts
+      a(href='/posts') /posts shows 10 recent posts
     h3
-      a(href='/posts/mylikes') /posts/mylikes
+      a(href='/posts?offset=5') /posts?offset=5 shows the 6th to 15th recent posts
+    h3
+      a(href='/posts?contains=beef') /posts?contains=beef searches posts with "beef"
+    h3
+      a(href='/posts/mylikes') /posts/mylikes shows posts liked by this user
+  h1 Elements test
+    h3
+      a(href='/elements') /elements shows nothing
+    h3
+      a(href='/elements?contains=beef') /elements?contains=beef searches elements with "beef"
