@@ -52,6 +52,10 @@ exports.getPost = function(req, res) {
               .limit(NUM_OF_POSTS)
               .sort('-title')
               .exec(function(err, newDocs) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+                res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+                res.setHeader('Access-Control-Allow-Credential', true);
                 res.send(JSON.parse(JSON.stringify(newDocs)));
               })
         } else {
