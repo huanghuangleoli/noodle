@@ -56,7 +56,10 @@ exports.getPost = function(req, res) {
               })
         } else {
           console.log('No error on indexing search.');
-          res.header('Access-Control-Allow-Origin', 'null');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+          res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+          res.setHeader('Access-Control-Allow-Credential', true);
           res.send(JSON.parse(JSON.stringify(docs)));
         }
   });
