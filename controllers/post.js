@@ -55,7 +55,8 @@ exports.getPost = function(req, res) {
                 res.send(JSON.parse(JSON.stringify(newDocs)));
               })
         } else {
-          console.log('No error on indexing search.')
+          console.log('No error on indexing search.');
+          res.header('Access-Control-Allow-Origin', 'null');
           res.send(JSON.parse(JSON.stringify(docs)));
         }
   });
