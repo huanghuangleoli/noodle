@@ -49,18 +49,18 @@ exports.getElement = function(req, res) {
     }, {
       name: 1,
       brand: 1,
-      vendor: 1,
       thumb: 1,
       photos: 1,
       ingredients: 1,
+      intro: 1,
       category_1: 1,
       category_2: 1,
       category_3: 1,
+      certificates: 1,
       tags: 1,
       creator: 1,
-      createAt: 1,
+      createdAt: 1,
       updateAt: 1,
-      usedIn: 1,
       textScore: {
         $meta: "textScore"
       }
