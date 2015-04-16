@@ -38,7 +38,7 @@ exports.getPost = function(req, res) {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
         res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
         res.setHeader('Access-Control-Allow-Credential', true);
-        res.send(JSON.parse(JSON.stringify(docs)));
+        res.send(JSON.parse(JSON.stringify(docs[0])));
       } else {
         res.status(400).send('Error: post not found for oid ' + id);
       }
@@ -127,7 +127,6 @@ exports.postPostUpdate = function(req, res, next) {
     req.query['id']
   , function(err, doc) {
     if (err) return next(err);
-        if (doc) console.log('>>>>');
     doc.title = req.body.title || '';
         console.log(doc.title);
 

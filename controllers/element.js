@@ -36,7 +36,7 @@ exports.getElement = function(req, res) {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
         res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
         res.setHeader('Access-Control-Allow-Credential', true);
-        res.send(JSON.parse(JSON.stringify(docs)));
+        res.send(JSON.parse(JSON.stringify(docs[0])));
       } else {
         res.status(400).send('Error: element not found for oid ' + id);
       }
