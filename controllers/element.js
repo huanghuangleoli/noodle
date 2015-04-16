@@ -30,7 +30,7 @@ exports.getElement = function(req, res) {
     elementModel.collection.find({
       _id: ObjectId(id)
     }).toArray(function(err, docs) {
-      if (!err) {
+      if (!err && docs && docs.length > 0) {
         console.log('Found id ' + id);
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
