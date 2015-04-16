@@ -30,6 +30,7 @@ var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var postController = require('./controllers/post');
 var elementController = require('./controllers/element');
+var sellController = require('./controllers/sell');
 
 /**
  * API keys and Passport configuration.
@@ -117,6 +118,8 @@ app.get('/posts/mylikes', passportConf.isAuthenticated, postController.getPostMy
 app.get('/elements', elementController.getElement);
 app.post('/elements', passportConf.isAuthenticated, elementController.postElement);
 app.get('elements/myelements', passportConf.isAuthenticated, elementController.getMyelements);
+app.get('/sells', sellController.getSell);
+
 /**
  * API examples routes.
  */

@@ -9,7 +9,7 @@ var elementSchema = new Schema({
   category_2 : { type: String },
   category_3 : { type: String },
   certificates : [ String ],
-  createAt : { type: Date },
+  createdAt : { type: Date },
   creator : { type: ObjectId },
   ingredients : { type: String },
   intro : { type: String },
