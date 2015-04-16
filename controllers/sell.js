@@ -26,13 +26,13 @@ exports.getSell = function(req, res) {
                     elementModel.collection.find({
                         _id: docs[0].element
                     }).toArray(function(err, elementDocs) {
-                        docs[0].element = elementDocs;
+                        docs[0].element = elementDocs[0];
                         console.log(elementDocs.toString());
                         res.setHeader('Access-Control-Allow-Origin', '*');
                         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
                         res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
                         res.setHeader('Access-Control-Allow-Credential', true);
-                        res.send(JSON.parse(JSON.stringify(docs)));
+                        res.send(JSON.parse(JSON.stringify(docs[0])));
                     });
                 } else {
                     res.status(400).send('Error: sell has no element');
