@@ -1,1 +1,1 @@
-{ "isAdmin" : true, "password" : "$2a$10$zwNA1LTdGzECz4Ye3xxTmeRC4KrSvw495JvgVU25dGbzCtO3S8ZRC", "email" : "halo_mx@hotmail.com", "name" : { "last" : "User", "first" : "Admin" }, "_id" : { "$oid" : "550f5673d9b65c2307e07926" }, "__v" : 0 }
+{ "isAdmin" : true, "password" : "$2a$10$zwNA1LTdGzECz4Ye3xxTmeRC4KrSvw495JvgVU25dGbzCtO3S8ZRC", "email" : "halo_mx@hotmail.com", "name" : { "last" : "User", "first" : "Admin" }, "_id" : { "$oid" : "54d45779c82c2d706e82986c" }, "__v" : 0 }
