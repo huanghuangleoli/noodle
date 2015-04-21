@@ -23,7 +23,10 @@ exports.likePost = function(req, res) {
         User.findOne({_id: ObjectId(req.user.id)})
             .exec(function(err, thisUser) {
               if (thisUser) {
-                var list = thisUser.likedPost;
+                if (thisUser.likedPost.indexOf(ObjectId(postid)) > -1) {
+                  res.status(200).send('Post already liked');
+                  return;
+                }
                 thisUser.likedPost.push(ObjectId(postid));
                 thisUser.save(function(err) {
                     if (err) return next(err);
