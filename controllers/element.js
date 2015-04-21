@@ -27,6 +27,13 @@ exports.getElement = function(req, res) {
   var elementModel = mongoose.model('Element', Element.elementSchema);
 
   if (id != null) {
+    req.assert('id', 'id must be 24 chars long').len(24);
+    if (req.validationErrors()) {
+      res.status(400).send('Error: invalid id');
+      return;
+    }
+    id = id.substring(0, 24);
+
     elementModel.collection.find({
       _id: ObjectId(id)
     }).toArray(function(err, docs) {

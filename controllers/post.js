@@ -4,6 +4,9 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 var Post = require('../models/Post');
+var postModel = mongoose.model('Post', Post.postSchema);
+
+var User = require('../models/User');
 
 var NUM_OF_POSTS = 10;
 
@@ -25,9 +28,13 @@ exports.getPost = function(req, res) {
   var id = req.query['id'];
   var category = req.query['category']
 
-  var postModel = mongoose.model('Post', Post.postSchema);
-
   if (id != null || category != null) {
+    req.assert('id', 'id must be 24 chars long').len(24);
+    if (req.validationErrors()) {
+      res.status(400).send('Error: invalid post');
+      return;
+    }
+    id = id.substring(0, 24);
     postModel.collection.find({
       _id: ObjectId(id),
       category: category
@@ -59,7 +66,6 @@ exports.getPost = function(req, res) {
         $meta: "textScore"
       }
     })
-        .skip(offset)
         .limit(NUM_OF_POSTS)
         .sort({
           textScore: {
@@ -138,8 +144,48 @@ exports.postPostUpdate = function(req, res, next) {
 };
 
 /**
+ * GET /posts/myposts
+ */
+exports.getPostMyposts = function(req, res) {
+  var offset = req.query['offset'];
+  offset = offset ? offset : 0;
+  console.log('Get mypost for user ' + req.user.email);
+  Post.Post
+      .find({creator: ObjectId(req.user.id)}, {})
+      .skip(offset)
+      .limit(NUM_OF_POSTS)
+      .sort('-title')
+      .exec(function(err, docs) {
+    if (!err && docs) {
+      console.log(docs);
+      res.send(JSON.parse(JSON.stringify(docs)));
+    } else {
+      res.status(400).send('Error: myposts');
+    }
+  });
+};
+
+/**
  * GET /posts/mylikes
  */
 exports.getPostMylikes = function(req, res) {
-  res.send('TODO: return liked posts for user ' + req.user.email);
+  var offset = req.query['offset'];
+  offset = offset ? offset : 0;
+  User
+      .findOne({_id: ObjectId(req.user.id)})
+      .exec(function(err, user) {
+        postList = user.likedPost;
+        if (postList && postList.length > 0) {
+          console.log(user.likedPost.length);
+          Post.Post
+              .find({_id: {$in: postList}})
+              .skip(offset)
+              .limit(NUM_OF_POSTS)
+              .exec(function(err, docs) {
+                res.send(JSON.parse(JSON.stringify(docs)));
+              });
+        } else {
+          res.status(400).send('Error: no liked post in user db');
+        }
+      });
 };
