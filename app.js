@@ -31,6 +31,8 @@ var contactController = require('./controllers/contact');
 var postController = require('./controllers/post');
 var elementController = require('./controllers/element');
 var sellController = require('./controllers/sell');
+var vendorController = require('./controllers/vendor');
+var likeController = require('./controllers/like');
 
 /**
  * API keys and Passport configuration.
@@ -115,10 +117,14 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 app.get('/posts', postController.getPost);
 app.post('/posts', passportConf.isAuthenticated, postController.postPost);
 app.get('/posts/mylikes', passportConf.isAuthenticated, postController.getPostMylikes);
+app.get('/posts/myposts', passportConf.isAuthenticated, postController.getPostMyposts);
+app.post('/like', passportConf.isAuthenticated, likeController.likePost);
+app.post('/unlike', passportConf.isAuthenticated, likeController.unlikePost);
 app.get('/elements', elementController.getElement);
 app.post('/elements', passportConf.isAuthenticated, elementController.postElement);
 app.get('elements/myelements', passportConf.isAuthenticated, elementController.getMyelements);
 app.get('/sells', sellController.getSell);
+app.get('/vendors', vendorController.getVendor);
 
 /**
  * API examples routes.
