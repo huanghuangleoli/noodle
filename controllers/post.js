@@ -51,21 +51,22 @@ exports.getPost = function(req, res) {
       }
     });
   } else {
-    postModel.collection.find({
-      '$text': {
-        '$search': contains
-      }
-    }, {
-      title: 1,
-      tags: 1,
-      dishType: 1,
-      occasions: 1,
-      specials: 1,
-      origins: 1,
-      textScore: {
-        $meta: "textScore"
-      }
-    })
+    postModel.collection
+        .find({
+          '$text': {
+            '$search': contains
+          }
+        }, {
+          title: 1,
+          tags: 1,
+          dishType: 1,
+          occasions: 1,
+          specials: 1,
+          origins: 1,
+          textScore: {
+            $meta: "textScore"
+          }
+        })
         .limit(NUM_OF_POSTS)
         .sort({
           textScore: {
@@ -76,7 +77,8 @@ exports.getPost = function(req, res) {
           if (err) {
             // 启动备用方案，只搜索title
             console.log('Error on indexing, use backup search.')
-            Post.Post.find({title: new RegExp(contains)})
+            Post.Post
+                .find({title: new RegExp(contains)})
                 .skip(offset)
                 .limit(NUM_OF_POSTS)
                 .sort('-title')
@@ -129,9 +131,8 @@ exports.postPost = function(req, res, next) {
  * PUT /posts
  */
 exports.postPostUpdate = function(req, res, next) {
-  Post.Post.findById(
-    req.query['id']
-  , function(err, doc) {
+  Post.Post
+      .findById(req.query['id'], function(err, doc) {
     if (err) return next(err);
     doc.title = req.body.title || '';
         console.log(doc.title);
