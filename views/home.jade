@@ -1,17 +1,34 @@
 extends layout
 
 block content
+  h1 Like test
+    h3
+      a(href='/like?postid=5513348a8b1d9a542c000029') /like?postid=5513348a8b1d9a542c000029 likes this post.
+    h3
+      a(href='/unlike?postid=5513348a8b1d9a542c000029') /unlike?postid=5513348a8b1d9a542c000029 unlikes this post.
+    h3
+      a(href='/posts/mylikes') /posts/mylikes shows posts liked by this user
   h1 Posts test
     h3
       a(href='/posts') /posts shows 10 recent posts
     h3
       a(href='/posts?offset=5') /posts?offset=5 shows the 6th to 15th recent posts
     h3
-      a(href='/posts?contains=beef') /posts?contains=beef searches posts with "beef"
+      a(href='/posts?id=5513348a8b1d9a542c000029') /posts?5513348a8b1d9a542c000029 shows one post
     h3
-      a(href='/posts/mylikes') /posts/mylikes shows posts liked by this user
+      a(href='/posts?contains=beef,bbq') /posts?contains=beef,bbq searches posts with "beef" and "bbq"
+    h3
+      a(href='/posts/myposts') /posts/myposts shows posts created by this user
   h1 Elements test
     h3
       a(href='/elements') /elements shows nothing
     h3
+      a(href='/elements?id=551234538b1d9a24ac000029') /elements?id=551234538b1d9a24ac000029 returns one element
+    h3
       a(href='/elements?contains=beef') /elements?contains=beef searches elements with "beef"
+  h1 Sells test
+    h3
+      a(href='/sells?id=551234538b1d9a24ac00002a') /sells?id=551234538b1d9a24ac00002a returns one sell
+  h1 Vendors test
+    h3
+      a(href='/vendors?id=551234538b1d9a24ac00002b') /vendors?id=551234538b1d9a24ac00002b returns one vendor

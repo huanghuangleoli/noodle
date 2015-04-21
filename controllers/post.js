@@ -161,7 +161,7 @@ exports.getPostMyposts = function(req, res) {
       console.log(docs);
       res.send(JSON.parse(JSON.stringify(docs)));
     } else {
-      res.status(400).send('Error: myposts');
+      res.status(400).send('No posts');
     }
   });
 };
@@ -186,7 +186,7 @@ exports.getPostMylikes = function(req, res) {
                 res.send(JSON.parse(JSON.stringify(docs)));
               });
         } else {
-          res.status(400).send('Error: no liked post in user db');
+          res.status(400).send('No liked post');
         }
       });
 };
