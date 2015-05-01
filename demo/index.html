@@ -1,9 +1,3 @@
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -940,8 +934,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
 			});
 			
-			$("#join").submit(function() {
-		    	alert("Thank you for joining Dinneract. You will receive an invitation email when we launch our Beta program.");
+			$("#join").submit(function(e) {
+
+				e.preventDefault();
+	
+				var url = "email.php";
+
+				$.post(url, $(this).serialize(), function(data) {
+					if(data[0] == 's') {
+
+						alert("Thank you for joining Dinneract. You will receive an invitation email when we launch our Beta program.");
+					} else {
+						console.log(data);
+						alert("Error: system failed in signup! please contact dinneract2015@gmail.com");
+					}
+				});
 			});
 			
 
