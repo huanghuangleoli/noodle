@@ -1,5 +1,6 @@
 <?php
-$to      = 'dinneract2015@gmail.com, halo_mx@hotmail.com';
+date_default_timezone_set('america/los_angeles');
+$to      = 'dinneract2015@gmail.com';
 $subject = "signup " . date(DATE_RFC2822);
 $message = "I'm a " . $_POST["type"] . " and my email is " . $_POST["email"];
 $headers = 'From: noreply@dinneract.com' . "\r\n" .
