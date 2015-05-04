@@ -27,19 +27,18 @@ exports.postLogin = function(req, res, next) {
   var errors = req.validationErrors();
 
   if (errors) {
-    res.status(400).send({message: 'wrong password'})
+    res.status(400).send({message: 'email not found'})
     return;
   }
 
   passport.authenticate('local', function(err, user, info) {
-    if (err) return next(err);
-    if (!user) {
-      if (err) res.status(400).send({message: 'email not found.'});
+    if (err || !user) {
+      res.status(400).send({message: 'wrong password.'});
       return;
     }
     req.logIn(user, function(err) {
       if (err) {
-        res.status(400).send({message: 'wrong password'})
+        res.status(400).send({message: 'log in error'})
         return;
       }
       res.send({token: user.password});
