@@ -140,7 +140,7 @@ function createIndexForElement() {
   });
 }
 
-//createIndexForPost();
+createIndexForPost();
 createIndexForElement();
 
 // mongoimport --db dinneract --collection elements --file elements.json
