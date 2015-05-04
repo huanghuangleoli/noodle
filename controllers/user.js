@@ -24,24 +24,26 @@ exports.getLogin = function(req, res) {
 exports.postLogin = function(req, res, next) {
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password cannot be blank').notEmpty();
-
   var errors = req.validationErrors();
 
   if (errors) {
-    req.flash('errors', errors);
-    return res.redirect('/login');
+    res.status(400).send({message: 'wrong password'})
+    return;
   }
 
   passport.authenticate('local', function(err, user, info) {
     if (err) return next(err);
     if (!user) {
-      req.flash('errors', { msg: info.message });
-      return res.redirect('/login');
+      if (err) res.status(400).send({message: 'email not found.'});
+      return;
     }
     req.logIn(user, function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/');
+      if (err) {
+        res.status(400).send({message: 'wrong password'})
+        return;
+      }
+      res.send({token: user.password});
+      return;
     });
   })(req, res, next);
 };
@@ -354,5 +356,21 @@ exports.postForgot = function(req, res, next) {
   ], function(err) {
     if (err) return next(err);
     res.redirect('/forgot');
+  });
+};
+
+/**
+ * new index page for login
+ */
+exports.newLoginHttp = function(req, res, next) {
+  console.log(__dirname);
+  res.sendFile(__dirname + '/html/newlogin.html', function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('new login page');
+    }
   });
 };

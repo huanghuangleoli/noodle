@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>New Dinneract Login</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("div").css("padding", "8px");
+            $("input").focus(function(){
+                $(this).css("background-color", "#cccccc");
+            });
+            $("input").blur(function(){
+                $(this).css("background-color", "#ffffff");
+            });
+            $("#loginBtn").click(function(){
+                var token = '';
+                $.ajax({
+                    url: "/login",
+                    method: "POST",
+                    data:
+                    {
+                        email: $("#emailInput").val(),
+                        password: $("#passwordInput").val()
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        token = data;
+                        alert(JSON.stringify(token));
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+<div>Hello, this is new login page.</div>
+<div>Email: <input id="emailInput" type="text" name="fullname"></div>
+<div>Password: <input id="passwordInput" type="text" name="email"></div>
+<div>Login: <button id="loginBtn">Login</button></div>
+
+</body>
+</html>
