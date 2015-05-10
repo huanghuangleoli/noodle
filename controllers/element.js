@@ -5,7 +5,7 @@ var ObjectId = mongoose.Types.ObjectId;
 
 var Element = require('../models/Element');
 
-var NUM_OF_ELEMENTS = 10;
+var NUM_OF_ELEMENTS = 30;
 
 /**
  * GET /elements

@@ -8,7 +8,7 @@ var postModel = mongoose.model('Post', Post.postSchema);
 
 var User = require('../models/User');
 
-var NUM_OF_POSTS = 10;
+var NUM_OF_POSTS = 30;
 
 /**
  * GET /posts
