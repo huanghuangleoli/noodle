@@ -88,10 +88,18 @@ exports.getElement = function(req, res) {
             .limit(NUM_OF_ELEMENTS)
             .sort('-title')
             .exec(function (err, newDocs) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+        res.setHeader('Access-Control-Allow-Credential', true);
               res.send(JSON.parse(JSON.stringify(newDocs)));
             })
       } else {
         console.log('No error on indexing search.')
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+        res.setHeader('Access-Control-Allow-Credential', true);
         res.send(JSON.parse(JSON.stringify(docs)));
       }
     });
@@ -128,5 +136,17 @@ exports.postElement = function(req, res, next) {
  * GET /elements/myelements
  */
 exports.getMyelements = function(req, res) {
-  res.send('TODO: return elements created for user ' + req.user.email);
+  Element.Element
+      .find({creator: ObjectId(req.user.id)}, {})
+      .limit(NUM_OF_ELEMENTS)
+      .sort('name')
+      .exec(function(err, docs) {
+        if (!err & docs) {
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+          res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+          res.setHeader('Access-Control-Allow-Credential', true);
+          res.send(JSON.parse(JSON.stringify(docs)));
+        }
+      });
 };

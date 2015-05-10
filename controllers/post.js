@@ -159,6 +159,10 @@ exports.getPostMyposts = function(req, res) {
       .exec(function(err, docs) {
     if (!err && docs) {
       console.log(docs);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+      res.setHeader('Access-Control-Allow-Credential', true);
       res.send(JSON.parse(JSON.stringify(docs)));
     } else {
       res.status(400).send('No posts');
@@ -183,6 +187,10 @@ exports.getPostMylikes = function(req, res) {
               .skip(offset)
               .limit(NUM_OF_POSTS)
               .exec(function(err, docs) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+                res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+                res.setHeader('Access-Control-Allow-Credential', true);
                 res.send(JSON.parse(JSON.stringify(docs)));
               });
         } else {

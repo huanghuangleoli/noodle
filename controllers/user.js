@@ -41,6 +41,10 @@ exports.postLogin = function(req, res, next) {
         res.status(400).send({message: 'log in error'})
         return;
       }
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+      res.setHeader('Access-Control-Allow-Credential', true);
       res.send({token: user.password});
       return;
     });
@@ -363,6 +367,10 @@ exports.postForgot = function(req, res, next) {
  */
 exports.newLoginHttp = function(req, res, next) {
   console.log(__dirname);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+  res.setHeader('Access-Control-Allow-Credential', true);
   res.sendFile(__dirname + '/html/newlogin.html', function (err) {
     if (err) {
       console.log(err);
