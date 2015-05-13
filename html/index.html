@@ -1,378 +1,490 @@
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <!--
-    Modified from the Debian original for Ubuntu
-    Last updated: 2014-03-19
-    See: https://launchpad.net/bugs/1288690
-  -->
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Apache2 Ubuntu Default Page: It works</title>
-    <style type="text/css" media="screen">
-  * {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-  }
-
-  body, html {
-    padding: 3px 3px 3px 3px;
-
-    background-color: #D8DBE2;
-
-    font-family: Verdana, sans-serif;
-    font-size: 11pt;
-    text-align: center;
-  }
-
-  div.main_page {
-    position: relative;
-    display: table;
-
-    width: 800px;
-
-    margin-bottom: 3px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0px 0px 0px 0px;
-
-    border-width: 2px;
-    border-color: #212738;
-    border-style: solid;
-
-    background-color: #FFFFFF;
-
-    text-align: center;
-  }
-
-  div.page_header {
-    height: 99px;
-    width: 100%;
-
-    background-color: #F5F6F7;
-  }
-
-  div.page_header span {
-    margin: 15px 0px 0px 50px;
-
-    font-size: 180%;
-    font-weight: bold;
-  }
-
-  div.page_header img {
-    margin: 3px 0px 0px 40px;
-
-    border: 0px 0px 0px;
-  }
-
-  div.table_of_contents {
-    clear: left;
-
-    min-width: 200px;
-
-    margin: 3px 3px 3px 3px;
-
-    background-color: #FFFFFF;
-
-    text-align: left;
-  }
-
-  div.table_of_contents_item {
-    clear: left;
-
-    width: 100%;
-
-    margin: 4px 0px 0px 0px;
-
-    background-color: #FFFFFF;
-
-    color: #000000;
-    text-align: left;
-  }
-
-  div.table_of_contents_item a {
-    margin: 6px 0px 0px 6px;
-  }
-
-  div.content_section {
-    margin: 3px 3px 3px 3px;
-
-    background-color: #FFFFFF;
-
-    text-align: left;
-  }
-
-  div.content_section_text {
-    padding: 4px 8px 4px 8px;
-
-    color: #000000;
-    font-size: 100%;
-  }
-
-  div.content_section_text pre {
-    margin: 8px 0px 8px 0px;
-    padding: 8px 8px 8px 8px;
-
-    border-width: 1px;
-    border-style: dotted;
-    border-color: #000000;
-
-    background-color: #F5F6F7;
-
-    font-style: italic;
-  }
-
-  div.content_section_text p {
-    margin-bottom: 6px;
-  }
-
-  div.content_section_text ul, div.content_section_text li {
-    padding: 4px 8px 4px 16px;
-  }
-
-  div.section_header {
-    padding: 3px 6px 3px 6px;
-
-    background-color: #8E9CB2;
-
-    color: #FFFFFF;
-    font-weight: bold;
-    font-size: 112%;
-    text-align: center;
-  }
-
-  div.section_header_red {
-    background-color: #CD214F;
-  }
-
-  div.section_header_grey {
-    background-color: #9F9386;
-  }
-
-  .floating_element {
-    position: relative;
-    float: left;
-  }
-
-  div.table_of_contents_item a,
-  div.content_section_text a {
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  div.table_of_contents_item a:link,
-  div.table_of_contents_item a:visited,
-  div.table_of_contents_item a:active {
-    color: #000000;
-  }
-
-  div.table_of_contents_item a:hover {
-    background-color: #000000;
-
-    color: #FFFFFF;
-  }
-
-  div.content_section_text a:link,
-  div.content_section_text a:visited,
-   div.content_section_text a:active {
-    background-color: #DCDFE6;
-
-    color: #000000;
-  }
-
-  div.content_section_text a:hover {
-    background-color: #000000;
-
-    color: #DCDFE6;
-  }
-
-  div.validator {
-  }
-    </style>
-  </head>
-  <body>
-    <div class="main_page">
-      <div class="page_header floating_element">
-        <img src="/icons/ubuntu-logo.png" alt="Ubuntu Logo" class="floating_element"/>
-        <span class="floating_element">
-          Apache2 Ubuntu Default Page
-        </span>
-      </div>
-<!--      <div class="table_of_contents floating_element">
-        <div class="section_header section_header_grey">
-          TABLE OF CONTENTS
-        </div>
-        <div class="table_of_contents_item floating_element">
-          <a href="#about">About</a>
-        </div>
-        <div class="table_of_contents_item floating_element">
-          <a href="#changes">Changes</a>
-        </div>
-        <div class="table_of_contents_item floating_element">
-          <a href="#scope">Scope</a>
-        </div>
-        <div class="table_of_contents_item floating_element">
-          <a href="#files">Config files</a>
-        </div>
-      </div>
--->
-      <div class="content_section floating_element">
-
-
-        <div class="section_header section_header_red">
-          <div id="about"></div>
-          It works!
-        </div>
-        <div class="content_section_text">
-          <p>
-                This is the default welcome page used to test the correct 
-                operation of the Apache2 server after installation on Ubuntu systems.
-                It is based on the equivalent page on Debian, from which the Ubuntu Apache
-                packaging is derived.
-                If you can read this page, it means that the Apache HTTP server installed at
-                this site is working properly. You should <b>replace this file</b> (located at
-                <tt>/var/www/html/index.html</tt>) before continuing to operate your HTTP server.
-          </p>
-
-
-          <p>
-                If you are a normal user of this web site and don't know what this page is
-                about, this probably means that the site is currently unavailable due to
-                maintenance.
-                If the problem persists, please contact the site's administrator.
-          </p>
-
-        </div>
-        <div class="section_header">
-          <div id="changes"></div>
-                Configuration Overview
-        </div>
-        <div class="content_section_text">
-          <p>
-                Ubuntu's Apache2 default configuration is different from the
-                upstream default configuration, and split into several files optimized for
-                interaction with Ubuntu tools. The configuration system is
-                <b>fully documented in
-                /usr/share/doc/apache2/README.Debian.gz</b>. Refer to this for the full
-                documentation. Documentation for the web server itself can be
-                found by accessing the <a href="/manual">manual</a> if the <tt>apache2-doc</tt>
-                package was installed on this server.
-
-          </p>
-          <p>
-                The configuration layout for an Apache2 web server installation on Ubuntu systems is as follows:
-          </p>
-          <pre>
-/etc/apache2/
-|-- apache2.conf
-|       `--  ports.conf
-|-- mods-enabled
-|       |-- *.load
-|       `-- *.conf
-|-- conf-enabled
-|       `-- *.conf
-|-- sites-enabled
-|       `-- *.conf
-          </pre>
-          <ul>
-                        <li>
-                           <tt>apache2.conf</tt> is the main configuration
-                           file. It puts the pieces together by including all remaining configuration
-                           files when starting up the web server.
-                        </li>
-
-                        <li>
-                           <tt>ports.conf</tt> is always included from the
-                           main configuration file. It is used to determine the listening ports for
-                           incoming connections, and this file can be customized anytime.
-                        </li>
-
-                        <li>
-                           Configuration files in the <tt>mods-enabled/</tt>,
-                           <tt>conf-enabled/</tt> and <tt>sites-enabled/</tt> directories contain
-                           particular configuration snippets which manage modules, global configuration
-                           fragments, or virtual host configurations, respectively.
-                        </li>
-
-                        <li>
-                           They are activated by symlinking available
-                           configuration files from their respective
-                           *-available/ counterparts. These should be managed
-                           by using our helpers
-                           <tt>
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enmod">a2enmod</a>,
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dismod">a2dismod</a>,
-                           </tt>
-                           <tt>
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2ensite">a2ensite</a>,
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2dissite">a2dissite</a>,
-                            </tt>
-                                and
-                           <tt>
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2enconf">a2enconf</a>,
-                                <a href="http://manpages.debian.org/cgi-bin/man.cgi?query=a2disconf">a2disconf</a>
-                           </tt>. See their respective man pages for detailed information.
-                        </li>
-
-                        <li>
-                           The binary is called apache2. Due to the use of
-                           environment variables, in the default configuration, apache2 needs to be
-                           started/stopped with <tt>/etc/init.d/apache2</tt> or <tt>apache2ctl</tt>.
-                           <b>Calling <tt>/usr/bin/apache2</tt> directly will not work</b> with the
-                           default configuration.
-                        </li>
-          </ul>
-        </div>
-
-        <div class="section_header">
-            <div id="docroot"></div>
-                Document Roots
-        </div>
-
-        <div class="content_section_text">
-            <p>
-                By default, Ubuntu does not allow access through the web browser to
-                <em>any</em> file apart of those located in <tt>/var/www</tt>,
-                <a href="http://httpd.apache.org/docs/2.4/mod/mod_userdir.html">public_html</a>
-                directories (when enabled) and <tt>/usr/share</tt> (for web
-                applications). If your site is using a web document root
-                located elsewhere (such as in <tt>/srv</tt>) you may need to whitelist your
-                document root directory in <tt>/etc/apache2/apache2.conf</tt>.
-            </p>
-            <p>
-                The default Ubuntu document root is <tt>/var/www/html</tt>. You
-                can make your own virtual hosts under /var/www. This is different
-                to previous releases which provides better security out of the box.
-            </p>
-        </div>
-
-        <div class="section_header">
-          <div id="bugs"></div>
-                Reporting Problems
-        </div>
-        <div class="content_section_text">
-          <p>
-                Please use the <tt>ubuntu-bug</tt> tool to report bugs in the
-                Apache2 package with Ubuntu. However, check <a
-                href="https://bugs.launchpad.net/ubuntu/+source/apache2">existing
-                bug reports</a> before reporting a new bug.
-          </p>
-          <p>
-                Please report bugs specific to modules (such as PHP and others)
-                to respective packages, not to the web server itself.
-          </p>
-        </div>
-
-
-
-
-      </div>
-    </div>
-    <div class="validator">
-    <p>
-      <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Transitional" height="31" width="88" /></a>
-    </p>
-    </div>
-  </body>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="apple-touch-icon" sizes="57x57" href="images/icon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="images/icon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="images/icon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="images/icon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="images/icon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="images/icon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="images/icon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="images/icon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="images/icon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="images/icon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/icon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="images/icon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/icon/favicon-16x16.png">
+	<link rel="manifest" href="images/icon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="images/icon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	
+	
+	<title>Dinneract | Home</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href='css/MetroJs.css' rel='stylesheet' type='text/css' />
+	<link href='css/style.css' rel='stylesheet' type='text/css' />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='css/font-awesome-4.3.0/css/font-awesome.min.css' rel='stylesheet' type='text/css' />
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/move-top.js"></script>
+	<script type="text/javascript" src="js/easing.js"></script>
+	<script type="text/javascript" src="js/MetroJs.js"></script>
+	
+</head>
+<body>
+<!---start-wrap---->
+	<!---start-header---->
+	<div class="header">
+	<div class="wrap">
+		<div class="logo">
+			<a href="index.html"><img src="images/comp_logo.png"/></a>
+		</div>
+		<div class="head-nav">
+			<ul>
+				<li class="active"><a href="#home" class="scroll">Home</a></li>
+				<li><a href="#signup" class="scroll">Sign Up</a></li>
+				<li><a href="#features" class="scroll">Features</a></li>
+				<li><a href="#how" class="scroll">How</a></li>
+				<li><a href="#demo" class="scroll">Demo</a></li>
+			</ul>
+		</div>
+		<div class="clear"> </div>
+	</div>
+	<!---//End-header---->
+	</div>
+	
+	<!---start-image-banner---->
+	<div class="img-banner" id="home">
+		<div class="img-banner-info">
+			<div class="img-banner-info-inner">
+				<h1><img id="logo_slogan" src="images/comp_logo_slogan.png"/></h1>
+				<p>Dinneract is world's first community powered food social shopping App. 
+					Our mission is to diminish the retail obstacles between vendors and 
+					consumers and bring the latest healthy, quality specialty foods and 
+					kitchenwares to everyone in the most effective and stylish way.
+				</p>
+				<div class="clear"> </div>
+				<div class="info-btns">
+					<ul>
+						<li><a href="#signup" class="scroll"> </a></li>
+						<li><a href="#signup" class="scroll"> </a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="img-banner-pic">
+			<!-- <div id="app-banner"></div>
+			<div id="app-img-loading">
+				<img id="loading" src="images/loading-cup.gif">
+			</div> -->
+			<div id="app-img-section" class="live-tile" data-mode="carousel" data-direction="horizontal" data-delay="4000">
+				<div class="screen">
+					<img src="images/screenshot/dinneract.png" alt="dinneract" />
+					<!-- <span class='tile-title'>title</span> -->
+				</div>
+				<div class="screen">
+					<img src="images/screenshot/merchant.png" alt="merchant" />
+				</div>
+				<div class="screen">
+					<img src="images/screenshot/foodie.png" alt="foodie" />
+				</div>
+				<div class="screen">
+					<img src="images/screenshot/chef.png" alt="chef" />
+				</div>
+			</div>
+			<!-- <div id="screenshot" class="carousel slide carousel-fade" data-ride="carousel">
+					  	
+				<div class="carousel-inner">
+					<div class="active item">
+						<img src="images/screenshot/dinneract.png" alt="dinneract" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/merchant.png" alt="merchant" />
+					</div>
+					<div class="item">
+					   	<img src="images/screenshot/foodie.png" alt="foodie" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/chef.png" alt="chef" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/login.png" alt="login" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/discovery.png" alt="discovery" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/post.png" alt="post" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/products.png" alt="products" />
+					</div>
+					<div class="item">
+						<img src="images/screenshot/product.png" alt="buy" />
+					</div>
+				</div>
+
+				<a class="carousel-control left" href="#screenshot" data-slide="prev" style="padding-top: 216px;">&lsaquo;</a>
+				<a class="carousel-control right" href="#screenshot" data-slide="next" style="padding-top: 216px;">&rsaquo;</a>
+				
+			</div>-->
+		</div>
+		<div class="clear"> </div>
+	</div>
+	<!---//End-image-banner---->
+	
+	<!---start-mid-grids----->
+	<div class="mid-grids" id="signup">
+		<div class="mid-grids-bottom">
+			<div class="wrap">
+				<h3>Sign up to join Dinneract !</h3>
+				<form id="join">
+					<label>I'm a&nbsp;&nbsp;</label>
+					<select class="textbox" name="type">
+						<option>Foodie</option>
+						<option>Merchant</option>
+						<option>Chef</option>
+					</select>
+					<label>&nbsp;and My Email is&nbsp;</label>
+					<input type="email" class="textbox" name="email" value="" required />
+					<input type="submit" value="Join" />
+				</form>
+			</div>
+		</div>
+	</div>
+	<!---//End-mid-grids----->
+	
+	<!---start-top-grids----->
+	<div class="top-grids" id="features">
+	<div class="wrap">
+		<div class="top-grid">
+			<a class="icon1"><img src="images/vendor.png" /></a>
+			<h3>Merchants</h3>
+			<b>The fastest way to sell your speciality foods</b>
+			<p>
+				Get direct access to your consumers without hassle in the traditional distribution. 
+				Your products will be seen by the consumers globally. 
+			</p>
+		</div>
+		<div class="top-grid">
+			<a class="icon2"><img src="images/foodie.png" /></a>
+			<h3>Foodies</h3>
+			<b>The most fashionable way to shop food</b>
+			<p>
+				Discover world's specialty foods and their amazing use in one place. 
+				Easy and instant shop of what is on your taste radar. Share and influence.
+			</p>
+		</div>
+		<div class="top-grid">
+			<a class="icon3"><img src="images/chef.png" /></a>
+			<h3>Chefs</h3>
+			<b>The most natural way to promote your business</b>
+			<p>
+				Create your signature recipes with featured specialty foods and periphery products. 
+				Sell and self-brand.
+			</p>	
+		</div>
+		<div class="clear"> </div>
+		<div class="top-grid">
+			<a href="#signup" class="tellMeMore scroll">Brilliant. Tell me more.</a>	
+		</div>
+		<div class="top-grid">
+			<a href="#signup" class="tellMeMore scroll">Fun. Tell me more.</a>	
+		</div>
+		<div class="top-grid">
+			<a href="#signup" class="tellMeMore scroll">Smart. Tell me more.</a>	
+		</div>
+		<div class="clear"> </div>
+	</div>
+	</div>
+	<!---//End-top-grids----->
+	
+	<!---start-mid-grids 2----->
+	<div class="mid-grids" id="how">	
+		<div class="mid-grid-top">
+			<div class="wrap">
+				<h3>How does Dinneract work?</h3>
+				<div class="mid-grid-top-pic">
+					<div id="carousel" class="carousel slide" data-ride="carousel">
+					  	
+					  	<!-- Carousel items -->
+					  	<div class="carousel-inner" role="listbox">
+					    	<div class="active item">
+					    		<img src="images/step/1.png" alt="step1" />
+					    	</div>
+					   		<div class="item">
+					   			<img src="images/step/2.png" alt="step2" />
+					   		</div>
+					    	<div class="item">
+					    		<img src="images/step/3.png" alt="step3" />
+					    	</div>
+					    	<div class="item">
+					    		<img src="images/step/4.png" alt="step4" />
+					    	</div>
+					    	<div class="item">
+					    		<img src="images/step/5.png" alt="step5" />
+					    	</div>
+					    	<div class="item">
+					    		<img src="images/step/6.png" alt="step6" />
+					    	</div>
+					  	</div>
+
+					  	<!-- Carousel nav -->
+					  	<!--<ol class="carousel-indicators">
+					    	<li data-target="#carousel" data-slide-to="0" class="active"></li>
+					    	<li data-target="#carousel" data-slide-to="1"></li>
+					    	<li data-target="#carousel" data-slide-to="2"></li>
+					    	<li data-target="#carousel" data-slide-to="3"></li>
+					    	<li data-target="#carousel" data-slide-to="4"></li>
+					    	<li data-target="#carousel" data-slide-to="5"></li>
+					  	</ol>
+					  	<!-- 
+					  	<a class="carousel-control left" href="#carousel" data-slide="prev">&lsaquo;</a>
+					  	<a class="carousel-control right" href="#carousel" data-slide="next">&rsaquo;</a>
+					  	-->
+					</div>
+				</div>
+				<div class="mid-grid-top-info">
+					<h3 id="stepTitle">A Community for Food Fashion</h3>
+					<p id="stepDetail">
+						The quality eating and healthy diet have made food more than a mere necessity. In Dinneract, we believe food is a fashion. Each person has a unique taste bud just like their fashion sense on how to mix and match clothes. Dinneract gives everyone everywhere a voice in shaping today's eating trends and influencing food purchases. 
+					</p>
+				</div>
+				<div class="clear"> </div>
+			</div>
+			
+		</div>
+	</div>	
+	<!---//End-mid-grids----->
+	
+	<!---start-mid-grids 3----->
+	<div class="mid-grids" id="demo">
+		<div class="mid-grids-center">
+			<div class="wrap">
+				<!--<h3></h3>
+				<p>&nbsp;</p>-->
+				<iframe id="player" type="text/html" width="60%" height="500" src="http://www.youtube.com/embed/TcbzUKdrDhA?enablejsapi=1&origin=http://dinneract.com" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+			</div>
+		</div>
+	</div>	
+	<!---//End-mid-grids----->
+	
+	
+	<!---start-footer----->
+	<div class="footer">
+		<div class="wrap">
+
+				<div class="footer-left">
+					<a href="index.html"><img src="images/comp_logo.png" alt="logo"/></a>
+			  	</div>
+				<div class="footer-center">
+					<div class="cssmenu">
+						<ul>
+							<li><a href="#home">App</a></li> 
+							<li><a href="mailto:service@dinneract.com">Contact</a></li>
+							<!--support right now is not a popup -->
+							<!-- <li><a href="#contact">Support</a></li> -->
+							<li><a href="#terms" data-toggle="modal" data-backdrop="static">Terms</a></li> 
+							<li><a href="#privacy" data-toggle="modal" data-backdrop="static">Privacy</a></li> 
+				   		</ul>
+					</div>
+				</div>
+			   	<div class="footer-right">
+						<ul class="list-inline social-buttons">
+	                        <li>
+	                        	<a href="https://twitter.com/DinneractInc" target="_blank" class="tw">
+	                        		<i class="fa fa-twitter" title="Twitter"></i>
+	                        	</a>
+	                        </li>
+	                        <li>
+	                        	<a href="https://www.facebook.com/dinneract" target="_blank" class="fb">
+	                        		<i class="fa fa-facebook" title="Facebook"></i>
+	                        	</a>
+	                        </li>
+	                        <li>
+	                        	<a href="https://www.pinterest.com/dinneract/" target="_blank" class="pin">
+	                        		<i class="fa fa-pinterest-p" title="Pinterest"></i>
+	                        	</a>
+	                        </li>
+	                        <li>
+	                        	<a href="https://instagram.com/dinneract/" target="_blank" class="inst">
+	                        		<i class="fa fa-instagram" title="Instagram"></i>
+	                        	</a>
+	                        </li>
+	                        <!--<li>
+	                        	<a href="https://plus.google.com/u/3/107570138513629378277/posts" target="_blank" class="gplus">
+	                        		<i class="fa fa-google-plus" title="Google+"></i>
+	                        	</a>
+	                        </li>-->
+	                    </ul>
+			 	</div>
+	         	<div class="clear"></div>
+
+        	<a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
+		</div>
+		<!---//End-wrap---->
+	</div>
+	<!---//End-footer----->
+	<div class="copy">
+		<p>&copy; 2014-2015 <a href="index.html"> Dinneract</a></p>
+	</div>
+	
+	
+	<!-- Signup Modal -->
+	<div id="signupConfirm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h3 class="modal-title">
+	          Signup Confirmation
+	        </h3>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+          	  <div class="col-sm-10 col-sm-offset-1">
+            	<p class="lead">
+	     			Thank you for joining Dinneract. You will receive an invitation email when we launch our Beta program.
+	     		</p>
+	     	  </div>
+	     	</div>
+	      </div>
+	      <div class="modal-footer">
+	        <a type="button" class="btn btn-default" data-dismiss="modal">Close</a>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div>
+	<!-- End of Modal -->
+	
+	
+	
+
+	<!-- Modal -->
+	<div id="terms" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	</div>
+	<!-- End of Modal -->	
+	
+	
+	<!-- Modal -->
+	<div id="privacy" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	</div>
+	<!-- End of Modal -->
+
+
+	
+	<script type="text/javascript">
+	
+		//loading modals
+		$("#privacy").load("privacy.inc"); 
+		$("#terms").load("terms.inc"); 
+		
+		
+		var stepTitle = [
+			"Discover Food and Food Ideas",
+			"Discover What\'s Behind Posts",
+			"Tips to Create the Cooking Steps",
+			"Tips to Create the Elements List",
+			"A Glance at Product Page",
+			
+			"A Community for Food Fashion"
+		];
+		
+		var stepDetail = [
+			"The great thing about Dinneract is you can discover new products and how to use them in one place. The first that comes to sight after you log in is the Discover page. It is a collection of Posts that are product oriented but presented in fabulous pictures of food cuisine created by all the users. The best way to explore in Dinneract is by Post, which one can easily like, save, comment, follow and share to other social networks.",
+			"Post is a recipe based solution to introduce products. Each Post features one or more food related products (food, drink, cookware) that are used either as ingredients or cooking tools. Like any recipe, a Post contains a list of functional Elements (ingredients, cooking tools etc.) and a list of cooking Steps. Have questions or comments? Check Comments to interact with the Post creator and the community.",
+			"The cooking steps are manuals to instruct others how to make the most out of a product. An extra bit of patience would not go amiss in creating the Steps if you are a business user. Make it brief and clear. And include the name of the featured products in the corresponding Steps where they are used.",
+			"An Elements list is more than just the ingredient lists shown in any recipe. Elements list allows one to add all possible items useful to create the Post. The featured products can be food & drink (ingredients), cookwares (cooking tools & containers), cookbooks ( cooking manuals), or even food events (related activities). If you are a merchant or chef, one piece of information you can never miss when editing the Element list is the Buy link. It will take people to your online store and bring you new business!",
+			"The product page contains more information about the featured product. In Dinneract, we encourage people to consume healthy, quality food to support specialty food community. Certificate labels distinguish those food products in the trend of organic, all natural, gluten-free,  non-GMO, sustainable etc., and help users to quickly decide if they are interested in any product. On clicking Buy Now, one can make an order from any mobile device, or save the product to a wish list for later use.",
+			
+			"The quality eating and healthy diet have made food more than a mere necessity. In Dinneract, we believe food is a fashion. Each person has a unique taste bud just like their fashion sense on how to mix and match clothes. Dinneract gives everyone everywhere a voice in shaping today's eating trends and influencing food purchases."
+		];
+		
+		/*
+		function checkImageLoad() {
+			$("#app-img-loading").hide();
+			$("#app-img-section").show();
+			$("#app-img-section").liveTile();
+		}*/
+		
+		function verticalCenter() {
+			if( $(".img-banner-info-inner").height() <= $(".img-banner-info").height() ) {
+				var shift = Math.floor( ( $(".img-banner-info").height() - $(".img-banner-info-inner").height() ) / 2 );
+				$(".img-banner-info").css("padding-top", shift+"px");
+			}
+		}
+		
+		$(document).ready(function($) {
+			//$("#app-img-section").hide();
+			
+			//myTimer = setTimeout(function(){ checkImageLoad(); }, 2000);
+			$("#app-img-section").liveTile();
+			
+			$('.carousel').carousel({
+				interval: 5000
+			});
+			
+			$('#carousel').on('slide.bs.carousel', function () {
+				//console.log( $('#carousel .active').index('#carousel .item') );
+				$('#stepTitle').html( stepTitle[ $('#carousel .active').index('#carousel .item') ] );
+				$('#stepDetail').html( stepDetail[ $('#carousel .active').index('#carousel .item') ] );
+			});
+			
+			verticalCenter();
+			
+			$( window ).resize(function() {
+				verticalCenter();
+			});
+			
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				var hashTag = this.hash,
+					offset = $(hashTag).offset().top;
+					console.log(hashTag+","+offset);
+				switch(hashTag) {
+					case "#signup":
+					case "#features":
+					case "#how":
+						offset = offset - 54;
+						break;
+						
+					case "#demo":
+						//offset = offset + 190;
+						break;
+					
+					default: break;
+				}
+				$('html,body').animate({scrollTop:offset},600);
+			});
+			
+			
+			$("#join").submit(function(e) {
+
+				e.preventDefault();
+
+				var url = "subscribe.php";
+
+				$.post(url, $(this).serialize(), function(data) {
+					if(data[0] == 's') {					
+						$("#signupConfirm h3.modal-title").html("Signup Confirmation");
+						$("#signupConfirm p.lead").html("Thank you for joining Dinneract. You will receive an invitation email when we launch our Beta program.");
+						$("#signupConfirm").modal("show");
+					} else {
+						//console.log(data);
+						$("#signupConfirm h3.modal-title").html("Signup Failed");
+						$("#signupConfirm p.lead").html("It seems that our mail server is not responding. Please contact:&nbsp;&nbsp;service@dinneract.com .");
+						$("#signupConfirm").modal("show");
+					}
+				});
+
+			});
+		    
+		});
+	</script>
+</body>
 </html>
-
