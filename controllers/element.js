@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 var Element = require('../models/Element');
+var User = require('../models/User');
 
 var NUM_OF_ELEMENTS = 30;
 
@@ -136,8 +137,13 @@ exports.postElement = function(req, res, next) {
  * GET /elements/myelements
  */
 exports.getMyelements = function(req, res) {
+  var offset = req.query['offset'];
+  offset = offset ? offset : 0;
+  console.log('Get myelements for user ' + req.user.email);
+
   Element.Element
       .find({creator: ObjectId(req.user.id)}, {})
+      .skip(offset)
       .limit(NUM_OF_ELEMENTS)
       .sort('name')
       .exec(function(err, docs) {
@@ -147,6 +153,37 @@ exports.getMyelements = function(req, res) {
           res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
           res.setHeader('Access-Control-Allow-Credential', true);
           res.send(JSON.parse(JSON.stringify(docs)));
+        } else {
+          res.status(400).send('No elements');
+        }
+      });
+};
+
+/**
+* GET /elements/mylikes
+*/
+exports.getElementMylikes = function(req, res) {
+  var offset = req.query['offset'];
+  offset = offset ? offset : 0;
+  User
+      .findOne({_id: ObjectId(req.user.id)})
+      .exec(function(err, user) {
+        elementList = user.likedElement;
+        if (elementList && elementList.length > 0) {
+          console.log(user.likedElement.length);
+          Element.Element
+              .find({_id: {$in: elementList}})
+              .skip(offset)
+              .limit(NUM_OF_ELEMENTS)
+              .exec(function(err, docs) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+                res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+                res.setHeader('Access-Control-Allow-Credential', true);
+                res.send(JSON.parse(JSON.stringify(docs)));
+              });
+        } else {
+          res.status(400).send('No liked element');
         }
       });
 };

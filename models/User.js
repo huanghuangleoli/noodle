@@ -25,6 +25,7 @@ var userSchema = new mongoose.Schema({
   },
 
   likedPost: [ObjectId],
+  likedElement: [ObjectId],
 
   resetPasswordToken: String,
   resetPasswordExpires: Date

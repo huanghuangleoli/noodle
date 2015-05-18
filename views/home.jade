@@ -3,11 +3,19 @@ extends layout
 block content
   h1 Like test
     h3
-      a(href='/like?postid=5513348a8b1d9a542c000029') /like?postid=5513348a8b1d9a542c000029 likes this post.
+      a(href='/likepost?postid=5513348a8b1d9a542c000029') /likepost?postid=5513348a8b1d9a542c000029 likes this post.
     h3
-      a(href='/unlike?postid=5513348a8b1d9a542c000029') /unlike?postid=5513348a8b1d9a542c000029 unlikes this post.
+      a(href='/unlikepost?postid=5513348a8b1d9a542c000029') /unlikepost?postid=5513348a8b1d9a542c000029 unlikes this post.
     h3
       a(href='/posts/mylikes') /posts/mylikes shows posts liked by this user
+
+    h3
+      a(href='/likeelement?elementid=551234538b1d9a24ac000029') /likeelement?elementid=551234538b1d9a24ac000029 likes this element.
+    h3
+      a(href='/unlikeelement?elementid=551234538b1d9a24ac000029') /unlikeelement?elementid=551234538b1d9a24ac000029 unlikes this element.
+    h3
+      a(href='/elements/mylikes') /elements/mylikes shows elements liked by this user
+
   h1 Posts test
     h3
       a(href='/posts') /posts shows 10 recent posts
