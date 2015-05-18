@@ -24,11 +24,13 @@ exports.getVendor = function(req, res) {
         vendorModel.collection.find({
             _id: ObjectId(id)
         }).toArray(function(err, docs) {
+          if (!err && docs && docs.length > 0) {
             res.setHeader('Access-Control-Allow-Origin', '*');
             res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
             res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
             res.setHeader('Access-Control-Allow-Credential', true);
             res.send(JSON.parse(JSON.stringify(docs[0])));
+          }
         });
     } else {
         res.status(400).send('Error: vendor id cannot be null');
