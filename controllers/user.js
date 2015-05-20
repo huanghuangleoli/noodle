@@ -6,60 +6,7 @@ var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
 
-/**
- * GET /login
- * Login page.
- */
-exports.getLogin = function(req, res) {
-  if (req.user) return res.redirect('/');
-  res.render('account/login', {
-    title: 'Login'
-  });
-};
-
-/**
- * POST /login
- * Sign in using email and password.
- */
-exports.postLogin = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('password', 'Password cannot be blank').notEmpty();
-  var errors = req.validationErrors();
-
-  if (errors) {
-    res.status(400).send({message: 'email not found'})
-    return;
-  }
-
-  passport.authenticate('local', function(err, user, info) {
-    if (err || !user) {
-      res.status(400).send({message: 'wrong password.'});
-      return;
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        res.status(400).send({message: 'log in error'})
-        return;
-      }
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
-      res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
-      res.setHeader('Access-Control-Allow-Credential', true);
-      res.send({token: user.password});
-      return;
-    });
-  })(req, res, next);
-};
-
-/**
- * GET /logout
- * Log out.
- */
-exports.logout = function(req, res) {
-  req.logout();
-  res.redirect('/');
-};
-
+// Web pages
 /**
  * GET /signup
  * Signup page.
@@ -72,19 +19,166 @@ exports.getSignup = function(req, res) {
 };
 
 /**
+ * GET /reset/:token
+ * Reset Password page.
+ */
+exports.getReset = function(req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  User
+      .findOne({ resetPasswordToken: req.params.token })
+      .where('resetPasswordExpires').gt(Date.now())
+      .exec(function(err, user) {
+        if (!user) {
+          req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
+          return res.redirect('/forgot');
+        }
+        res.render('account/reset', {
+          title: 'Password Reset'
+        });
+      });
+};
+
+/**
+ * new index page for login
+ */
+exports.newLoginHttp = function(req, res) {
+  console.log(__dirname);
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+  res.setHeader('Access-Control-Allow-Credential', true);
+  res.sendFile(__dirname + '/html/newlogin.html', function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('new login page');
+    }
+  });
+};
+
+/**
+ * GET /forgot
+ * Forgot Password page.
+ */
+exports.getForgot = function(req, res) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  res.render('account/forgot', {
+    title: 'Forgot Password'
+  });
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================ RESTful APIs ================ */
+
+/**
+ * GET /logout
+ * Log out.
+ */
+exports.logout = function(req, res) {
+  if (req.user) {
+    req.logout();
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+    res.setHeader('Access-Control-Allow-Credential', true);
+    res.send({succeed: 'user is logged out'});
+    return;
+  }
+  res.status(400).send({error: 'please login'});
+};
+
+/**
+ * GET /login
+ * Login information.
+ */
+exports.getLogin = function(req, res) {
+  if (req.user) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+    res.setHeader('Access-Control-Allow-Credential', true);
+    res.send({succeed: 'user was already logged in', token: req.user.password});
+    return;
+  }
+  res.status(400).send({error: 'please login'});
+};
+
+/**
+ * POST /login
+ * Sign in using email and password.
+ */
+exports.postLogin = function(req, res) {
+  req.assert('email', 'email is invalid').isEmail();
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'email is invalid'});
+    return;
+  }
+
+  req.assert('password', 'password is blank').notEmpty();
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'password is blank'});
+    return;
+  }
+
+  passport.authenticate('local', function(err, user) {
+    if (err || !user) {
+      res.status(400).send({error: 'password is wrong'});
+      return;
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        res.status(400).send({error: 'login error'});
+        return;
+      }
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+      res.setHeader('Access-Control-Allow-Credential', true);
+      res.send({succeed: 'user is logged in', token: user.password});
+    });
+  })(req, res);
+};
+
+
+/**
  * POST /signup
  * Create a new local account.
  */
-exports.postSignup = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-
-  var errors = req.validationErrors();
-
-  if (errors) {
-    req.flash('errors', errors);
-    return res.redirect('/signup');
+exports.postSignup = function(req, res) {
+  req.assert('email', 'email is invalid').isEmail();
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'email is invalid'});
+    return;
+  }
+  req.assert('password', 'password is not longer than 4 characters').len(4);
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'password is not longer than 4 characters'});
+    return;
+  }
+  req.assert('confirmPassword', 'confirm passwords do not match').equals(req.body.password);
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'confirm passwords do not match'});
+    return;
   }
 
   var user = new User({
@@ -94,26 +188,48 @@ exports.postSignup = function(req, res, next) {
 
   User.findOne({ email: req.body.email }, function(err, existingUser) {
     if (existingUser) {
-      req.flash('errors', { msg: 'Account with that email address already exists.' });
-      return res.redirect('/signup');
+      res.status(400).send({error: 'email already exists'});
+      return;
     }
     user.save(function(err) {
-      if (err) return next(err);
+      if (err) {
+        res.status(400).send({error: 'create account error'});
+        return;
+      }
       req.logIn(user, function(err) {
-        if (err) return next(err);
-        res.redirect('/');
+        if (err) {
+          res.status(400).send({error: 'login error'});
+          return;
+        }
+        res.send({succeed: 'user is created and logged in', token: req.user.password});
       });
     });
   });
 };
 
+
+
 /**
  * GET /account
- * Profile page.
  */
 exports.getAccount = function(req, res) {
-  res.render('account/profile', {
-    title: 'Account Management'
+  User.findById(req.user.id,
+      {
+        _id: 1,
+        email: 1,
+        profile: 1,
+        likedElement: 1,
+        likedPost: 1
+      }, function(err, user) {
+    if (!err && user) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+      res.setHeader('Access-Control-Allow-Credential', true);
+      res.send(JSON.parse(JSON.stringify(user)));
+    } else {
+      res.status(400).send({error: 'user is not found'});
+    }
   });
 };
 
@@ -121,19 +237,23 @@ exports.getAccount = function(req, res) {
  * POST /account/profile
  * Update profile information.
  */
-exports.postUpdateProfile = function(req, res, next) {
+exports.postUpdateProfile = function(req, res) {
   User.findById(req.user.id, function(err, user) {
-    if (err) return next(err);
-    user.email = req.body.email || '';
+    if (err) {
+      res.status(400).send({error: 'user is not found'});
+      return;
+    }
     user.profile.name = req.body.name || '';
     user.profile.gender = req.body.gender || '';
     user.profile.location = req.body.location || '';
     user.profile.website = req.body.website || '';
 
     user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
-      res.redirect('/account');
+      if (err) {
+        res.status(400).send({error: 'saving profile error'});
+        return;
+      }
+      res.send({succeed: 'account profile is updated'});
     });
   });
 };
@@ -142,26 +262,31 @@ exports.postUpdateProfile = function(req, res, next) {
  * POST /account/password
  * Update current password.
  */
-exports.postUpdatePassword = function(req, res, next) {
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
-  req.assert('confirmPassword', 'Passwords do not match').equals(req.body.password);
-
-  var errors = req.validationErrors();
-
-  if (errors) {
-    req.flash('errors', errors);
-    return res.redirect('/account');
+exports.postUpdatePassword = function(req, res) {
+  req.assert('password', 'password is not longer than 4 characters').len(4);
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'password is not longer than 4 characters'});
+    return;
   }
-
+  req.assert('confirmPassword', 'confirm passwords do not match').equals(req.body.password);
+  if (req.validationErrors()) {
+    res.status(400).send({error: 'confirm passwords do not match'});
+    return;
+  }
   User.findById(req.user.id, function(err, user) {
-    if (err) return next(err);
+    if (err) {
+      res.status(400).send({error: 'user is not found'});
+      return;
+    }
 
     user.password = req.body.password;
 
     user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Password has been changed.' });
-      res.redirect('/account');
+      if (err) {
+        res.status(400).send({error: 'change password error'});
+        return;
+      }
+      res.send({succeed: 'password is updated'});
     });
   });
 };
@@ -170,14 +295,18 @@ exports.postUpdatePassword = function(req, res, next) {
  * POST /account/delete
  * Delete user account.
  */
-exports.postDeleteAccount = function(req, res, next) {
+exports.postDeleteAccount = function(req, res) {
   User.remove({ _id: req.user.id }, function(err) {
-    if (err) return next(err);
+    if (err) {
+      res.status(400).send({error: 'delete account error'});
+      return;
+    }
     req.logout();
-    req.flash('info', { msg: 'Your account has been deleted.' });
-    res.redirect('/');
+    res.send({succeed: 'account is deleted'});
   });
 };
+
+
 
 /**
  * GET /account/unlink/:provider
@@ -199,27 +328,7 @@ exports.getOauthUnlink = function(req, res, next) {
   });
 };
 
-/**
- * GET /reset/:token
- * Reset Password page.
- */
-exports.getReset = function(req, res) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  User
-    .findOne({ resetPasswordToken: req.params.token })
-    .where('resetPasswordExpires').gt(Date.now())
-    .exec(function(err, user) {
-      if (!user) {
-        req.flash('errors', { msg: 'Password reset token is invalid or has expired.' });
-        return res.redirect('/forgot');
-      }
-      res.render('account/reset', {
-        title: 'Password Reset'
-      });
-    });
-};
+
 
 /**
  * POST /reset/:token
@@ -282,19 +391,6 @@ exports.postReset = function(req, res, next) {
   ], function(err) {
     if (err) return next(err);
     res.redirect('/');
-  });
-};
-
-/**
- * GET /forgot
- * Forgot Password page.
- */
-exports.getForgot = function(req, res) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  res.render('account/forgot', {
-    title: 'Forgot Password'
   });
 };
 
@@ -362,22 +458,4 @@ exports.postForgot = function(req, res, next) {
   });
 };
 
-/**
- * new index page for login
- */
-exports.newLoginHttp = function(req, res, next) {
-  console.log(__dirname);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
-  res.setHeader('Access-Control-Allow-Credential', true);
-  res.sendFile(__dirname + '/html/newlogin.html', function (err) {
-    if (err) {
-      console.log(err);
-      res.status(err.status).end();
-    }
-    else {
-      console.log('new login page');
-    }
-  });
-};
+

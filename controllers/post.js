@@ -121,8 +121,8 @@ exports.postPost = function(req, res, next) {
           return;
         }
         var post = new Post.Post(req.body);
-        post.tags = req.tags.join();
         post.creator = req.user._id;
+        post.createdAt = new Date(Date.now());
         post.save(function(err) {
           if (err) return next(err);
           res.redirect('/');
