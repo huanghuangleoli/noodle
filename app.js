@@ -94,48 +94,61 @@ app.use(function(req, res, next) {
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
-/**
- * Primary app routes.
- */
-app.get('/', homeController.index);
-
-app.get('/newlogin', userController.newLoginHttp);
 
 
+
+// ================ RESTful APIs exposed to mobile app and Web. ================
+
+// user.js
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
+app.post('/signup', userController.postSignup);
+app.get('/account', passportConf.isAuthenticated, userController.getAccount);
+app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
+app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
+app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
+
+// posts.js
+app.get('/posts', postController.getPost);
+app.post('/posts', passportConf.isAuthenticated, postController.postPost);
+app.get('/posts/mylikes', passportConf.isAuthenticated, postController.getPostMylikes);
+app.get('/posts/myposts', passportConf.isAuthenticated, postController.getPostMyposts);
+
+// elements.js
+app.get('/elements', elementController.getElement);
+app.post('/elements', passportConf.isAuthenticated, elementController.postElement);
+app.get('/elements/mylikes', passportConf.isAuthenticated, elementController.getElementMylikes);
+app.get('elements/myelements', passportConf.isAuthenticated, elementController.getMyelements);
+
+// like.js
+app.post('/like/element', passportConf.isAuthenticated, likeController.likeElement);
+app.post('/unlike/element', passportConf.isAuthenticated, likeController.unlikeElement);
+app.post('/like/post', passportConf.isAuthenticated, likeController.likePost);
+app.post('/unlike/post', passportConf.isAuthenticated, likeController.unlikePost);
+
+// sells.js
+app.get('/sells', sellController.getSell);
+
+// vendor.js
+app.get('/vendors', vendorController.getVendor);
+
+
+
+
+// ================ Webpages. ================
+
+app.get('/', homeController.index);
+app.get('/newlogin', userController.newLoginHttp);
 app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
 app.get('/signup', userController.getSignup);
-app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
-app.get('/account', passportConf.isAuthenticated, userController.getAccount);
-app.post('/account/profile', passportConf.isAuthenticated, userController.postUpdateProfile);
-app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
-app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
-app.get('/posts', postController.getPost);
-app.post('/posts', passportConf.isAuthenticated, postController.postPost);
-app.get('/posts/mylikes', passportConf.isAuthenticated, postController.getPostMylikes);
-app.get('/posts/myposts', passportConf.isAuthenticated, postController.getPostMyposts);
-app.get('/likeelement', passportConf.isAuthenticated, likeController.likeElement);
-app.get('/unlikeelement', passportConf.isAuthenticated, likeController.unlikeElement);
-app.get('/likepost', passportConf.isAuthenticated, likeController.likePost);
-app.get('/unlikepost', passportConf.isAuthenticated, likeController.unlikePost);
-app.get('/elements', elementController.getElement);
-app.post('/elements', passportConf.isAuthenticated, elementController.postElement);
-app.get('/elements/mylikes', passportConf.isAuthenticated, elementController.getElementMylikes);
-app.get('elements/myelements', passportConf.isAuthenticated, elementController.getMyelements);
-app.get('/sells', sellController.getSell);
-app.get('/vendors', vendorController.getVendor);
 
-/**
- * API examples routes.
- */
 app.get('/api', apiController.getApi);
 app.get('/api/lastfm', apiController.getLastfm);
 app.get('/api/nyt', apiController.getNewYorkTimes);

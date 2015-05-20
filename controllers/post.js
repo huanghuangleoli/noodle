@@ -81,7 +81,7 @@ exports.getPost = function(req, res) {
                 .find({title: new RegExp(contains)})
                 .skip(offset)
                 .limit(NUM_OF_POSTS)
-                .sort('-title')
+                .sort('-createdAt')
                 .exec(function (err, newDocs) {
                   res.setHeader('Access-Control-Allow-Origin', '*');
                   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
@@ -118,8 +118,8 @@ exports.postPost = function(req, res, next) {
           return;
         }
         var post = new Post.Post(req.body);
-        post.tags = req.tags.join();
         post.creator = req.user._id;
+        post.createdAt = new Date(Date.now());
         post.save(function(err) {
           if (err) return next(err);
           res.redirect('/');

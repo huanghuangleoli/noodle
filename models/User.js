@@ -17,15 +17,27 @@ var userSchema = new mongoose.Schema({
   tokens: Array,
 
   profile: {
-    name: { type: String, default: '' },
+    name: { type: String, default: '' }, // display name
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
     gender: { type: String, default: '' },
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: { type: String, default: '' }
   },
 
+  joinAt: String,
+  lastVisit: String,
+
+  role: String,
+  vendorId: ObjectId,
+  chefId: ObjectId,
+
   likedPost: [ObjectId],
   likedElement: [ObjectId],
+
+  // No createdPost, done by search.
+  // No createdElement, done by search.
 
   resetPasswordToken: String,
   resetPasswordExpires: Date
