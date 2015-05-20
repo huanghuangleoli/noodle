@@ -63,6 +63,8 @@ exports.getPost = function(req, res) {
           occasions: 1,
           specials: 1,
           origins: 1,
+          createdAt: 1,
+          creator: 1,
           textScore: {
             $meta: "textScore"
           }
@@ -71,7 +73,8 @@ exports.getPost = function(req, res) {
         .sort({
           textScore: {
             $meta: 'textScore'
-          }
+          },
+	  createdAt: -1
         })
         .toArray(function (err, docs) {
           if (err) {
@@ -81,7 +84,7 @@ exports.getPost = function(req, res) {
                 .find({title: new RegExp(contains)})
                 .skip(offset)
                 .limit(NUM_OF_POSTS)
-                .sort('-title')
+                .sort('-createdAt')
                 .exec(function (err, newDocs) {
                   res.setHeader('Access-Control-Allow-Origin', '*');
                   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
