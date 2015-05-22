@@ -26,7 +26,11 @@ exports.getPost = function(req, res) {
   offset = offset ? offset : 0;
   var contains = req.query['contains'];
   var id = req.query['id'];
-  var category = req.query['category']
+  var category = req.query['category'];
+  var sortCriteria = '-createdAt';
+  if (req.query['sort'] && req.query['sort'] == 'name') {
+    sortCriteria = 'title';
+  }
 
   if (id != null || category != null) {
     req.assert('id', 'id must be 24 chars long').len(24);
@@ -84,7 +88,7 @@ exports.getPost = function(req, res) {
                 .find()
                 .skip(offset)
                 .limit(NUM_OF_POSTS)
-                .sort('-createdAt')
+                .sort(sortCriteria)
                 .exec(function (err, newDocs) {
                   res.setHeader('Access-Control-Allow-Origin', '*');
                   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
@@ -154,11 +158,16 @@ exports.getPostMyposts = function(req, res) {
   var offset = req.query['offset'];
   offset = offset ? offset : 0;
   console.log('Get mypost for user ' + req.user.email);
+  var sortCriteria = '-createdAt';
+  if (req.query['sort'] && req.query['sort'] == 'name') {
+    sortCriteria = 'title';
+  }
+
   Post.Post
       .find({creator: ObjectId(req.user.id)}, {})
       .skip(offset)
       .limit(NUM_OF_POSTS)
-      .sort('-title')
+      .sort(sortCriteria)
       .exec(function(err, docs) {
     if (!err && docs) {
       console.log(docs);
