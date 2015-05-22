@@ -67,6 +67,7 @@ exports.getPost = function(req, res) {
             $meta: "textScore"
           }
         })
+        .skip(offset)
         .limit(NUM_OF_POSTS)
         .sort({
           textScore: {
@@ -75,10 +76,9 @@ exports.getPost = function(req, res) {
         })
         .toArray(function (err, docs) {
           if (err) {
-            // 启动备用方案，只搜索title
-            console.log('Error on indexing, use backup search.')
+            console.log('No search.');
             Post.Post
-                .find({title: new RegExp(contains)})
+                .find()
                 .skip(offset)
                 .limit(NUM_OF_POSTS)
                 .sort('-createdAt')

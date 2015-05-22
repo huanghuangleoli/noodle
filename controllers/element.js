@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 
 var Element = require('../models/Element');
+var elementModel = mongoose.model('Element', Element.elementSchema);
 var User = require('../models/User');
 
 var NUM_OF_ELEMENTS = 30;
@@ -25,8 +26,6 @@ exports.getElement = function(req, res) {
   var contains = req.query['contains'];
   var id = req.query['id'];
 
-  var elementModel = mongoose.model('Element', Element.elementSchema);
-
   if (id != null) {
     req.assert('id', 'id must be 24 chars long').len(24);
     if (req.validationErrors()) {
@@ -34,7 +33,6 @@ exports.getElement = function(req, res) {
       return;
     }
     id = id.substring(0, 24);
-
     elementModel.collection.find({
       _id: ObjectId(id)
     }).toArray(function(err, docs) {
@@ -82,17 +80,17 @@ exports.getElement = function(req, res) {
     })
     .toArray(function (err, docs) {
       if (err) {
-        // 启动备用方案，只搜索title
-        console.log('Error on indexing, use backup search.')
-        Element.Element.find({title: new RegExp(contains)})
+        console.log('No search.');
+        Element.Element
+            .find()
             .skip(offset)
             .limit(NUM_OF_ELEMENTS)
-            .sort('-title')
+            .sort('-createdAt')
             .exec(function (err, newDocs) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
-        res.setHeader('Access-Control-Allow-Credential', true);
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
+              res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
+              res.setHeader('Access-Control-Allow-Credential', true);
               res.send(JSON.parse(JSON.stringify(newDocs)));
             })
       } else {
