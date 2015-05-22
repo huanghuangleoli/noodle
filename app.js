@@ -129,6 +129,8 @@ app.post('/unlike/post', passportConf.isAuthenticated, likeController.unlikePost
 
 // sells.js
 app.get('/sells', sellController.getSell);
+app.get('/sells/byelement', sellController.getSellByElement);
+
 
 // vendor.js
 app.get('/vendors', vendorController.getVendor);
