@@ -143,4 +143,4 @@ function createIndexForElement() {
 createIndexForPost();
 createIndexForElement();
 
-// mongoimport --db dinneract --collection elements --file elements.json
+// mongoimport --db test --collection elements --file elements.json
