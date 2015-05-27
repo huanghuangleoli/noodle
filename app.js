@@ -119,8 +119,9 @@ app.get('/posts/myposts', passportConf.isAuthenticated, postController.getPostMy
 // elements.js
 app.get('/elements', elementController.getElement);
 app.post('/elements', passportConf.isAuthenticated, elementController.postElement);
+app.put('/elements', passportConf.isAuthenticated, elementController.putElement);
 app.get('/elements/mylikes', passportConf.isAuthenticated, elementController.getElementMylikes);
-app.get('elements/myelements', passportConf.isAuthenticated, elementController.getMyelements);
+app.get('elements/myelements', passportConf.isAuthenticated, elementController.getElementMyelements);
 
 // like.js
 app.post('/like/element', passportConf.isAuthenticated, likeController.likeElement);

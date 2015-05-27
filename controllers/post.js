@@ -35,6 +35,7 @@ exports.getPost = function(req, res) {
   }
 
   if (id != null || category != null) {
+    id = id.trim();
     if (id && id.length < 24) {
       res.status(400).send({error: 'post id is invalid'});
       return;
@@ -71,6 +72,7 @@ exports.getPost = function(req, res) {
           origins: 1,
           createdAt: 1,
           creator: 1,
+          updateAt: 1,
           textScore: {
             $meta: "textScore"
           }
