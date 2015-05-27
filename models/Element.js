@@ -4,20 +4,33 @@ var ObjectId = Schema.ObjectId;
 
 // Sorted by alphabet.
 var elementSchema = new Schema({
+  
+  name : { type: String },
   brand : { type: String },
+  
+  vendor : { type: ObjectId },
+  url : { type: String },
+  price : {
+  	amount : { type: String },
+	  unit : { type: String }
+  },
+  
+  thumb : { type: String },
+  photos : [ String ],
+  
+  intro : { type: String },
+  certificates : [ String ],
+  ingredients : { type: String },
+  
+  active : { type: Boolean },
+  
   category_1 : { type: String },
   category_2 : { type: String },
   category_3 : { type: String },
-  certificates : [ String ],
-  createdAt : { type: Date },
-  creator : { type: ObjectId },
-  ingredients : { type: String },
-  intro : { type: String },
-  name : { type: String },
-  photos : [ String ],
-  state : { type: String },
   tags : [ String ],
-  thumb : { type: String },
+  
+  creator : { type: ObjectId },
+  createdAt : { type: Date },
   updateAt : { type: Date }
 });
 
