@@ -10,6 +10,8 @@ var User = require('../models/User');
 
 var NUM_OF_POSTS = 30;
 
+/* ================ RESTful APIs ================ */
+
 /**
  * GET /posts
  * GET /posts?offset=2&contains=Chicken
@@ -33,12 +35,12 @@ exports.getPost = function(req, res) {
   }
 
   if (id != null || category != null) {
-    req.assert('id', 'id must be 24 chars long').len(24);
-    if (req.validationErrors()) {
-      res.status(400).send('Error: invalid post');
+    if (id && id.length < 24) {
+      res.status(400).send({error: 'post id is invalid'});
       return;
+    } else {
+      id = id.substring(0, 24);
     }
-    id = id.substring(0, 24);
     postModel.collection.find({
       _id: ObjectId(id),
       category: category
@@ -51,7 +53,7 @@ exports.getPost = function(req, res) {
         res.setHeader('Access-Control-Allow-Credential', true);
         res.send(JSON.parse(JSON.stringify(docs[0])));
       } else {
-        res.status(400).send('Error: post not found for oid ' + id);
+        res.status(400).send({error: 'post ' + id + ' is not found'});
       }
     });
   } else {
@@ -82,7 +84,7 @@ exports.getPost = function(req, res) {
 	  createdAt: -1
         })
         .toArray(function (err, docs) {
-          if (err) {
+          if (err || !docs) {
             console.log('No search.');
             Post.Post
                 .find()
@@ -90,6 +92,10 @@ exports.getPost = function(req, res) {
                 .limit(NUM_OF_POSTS)
                 .sort(sortCriteria)
                 .exec(function (err, newDocs) {
+                  if (err || !newDocs) {
+                    res.status(400).send({error: 'search error'});
+                    return;
+                  }
                   res.setHeader('Access-Control-Allow-Origin', '*');
                   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
                   res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
@@ -111,25 +117,28 @@ exports.getPost = function(req, res) {
 /*
  * POST /posts
  */
-exports.postPost = function(req, res, next) {
+exports.postPost = function(req, res) {
   req.assert('title', 'Title must be at least 8 characters long').len(8);
   if (req.validationErrors()) {
-    res.status(400).send('Error: invalid post');
+    res.status(400).send({error: 'post title has less than 8 characters'});
     return;
   }
   Post.Post
       .findOne({ title: req.body.title})
       .exec(function(err, existPost) {
         if (existPost) {
-          res.status(400).send('Error: title already exists');
+          res.status(400).send({error: 'title already exists'});
           return;
         }
         var post = new Post.Post(req.body);
         post.creator = req.user._id;
         post.createdAt = new Date(Date.now());
         post.save(function(err) {
-          if (err) return next(err);
-          res.redirect('/');
+          if (err) {
+            res.status(400).send({error: 'insert post error'});
+            return;
+          }
+          res.status(200).send({success: 'post is created'});
         });
       });
 };
@@ -137,18 +146,57 @@ exports.postPost = function(req, res, next) {
 /*
  * PUT /posts
  */
-exports.postPostUpdate = function(req, res, next) {
-  Post.Post
-      .findById(req.query['id'], function(err, doc) {
-    if (err) return next(err);
-    doc.title = req.body.title || '';
-        console.log(doc.title);
+var UPDATE_FIELDS = [
+  'title',
+  'photo',
+  'url',
+  'dishType',
+  'elements',
+  'intro',
+  'occasions',
+  'origins',
+  'serving',
+  'specials',
+  'state',
+  'steps',
+  'tags',
+  'time',
+  'video'
+];
+exports.putPost = function(req, res) {
+  var id = req.query['id'];
 
-    doc.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'post updated.' });
-    });
-  });
+  if (!id || id.length < 24) {
+    console.log(id);
+    res.status(400).send({error: 'post id is invalid'});
+    return;
+  }
+
+  Post.Post
+      .findById(id, function(err, doc) {
+        if (err || !doc) {
+          res.status(400).send({error: 'post is not found'});
+          return;
+        }
+        if (req.user._id != doc.creator.toString()) {
+          console.log('user is ' + req.user._id);
+          console.log('post creator is ' + doc.creator);
+          res.status(400).send({error: 'permission denied'});
+          return;
+        }
+        UPDATE_FIELDS.forEach(function(field) {
+          doc[field] = req.body[field] || '';
+        });
+        doc.updateAt = Date.now();
+
+        doc.save(function(err) {
+          if (err) {
+            res.status(400).send({error: 'modify post error'});
+            return;
+          }
+          res.send({success: 'post is updated'});
+        });
+      });
 };
 
 /**
@@ -177,7 +225,7 @@ exports.getPostMyposts = function(req, res) {
       res.setHeader('Access-Control-Allow-Credential', true);
       res.send(JSON.parse(JSON.stringify(docs)));
     } else {
-      res.status(400).send('No posts');
+      res.status(400).send({error: 'get my post error'});
     }
   });
 };
@@ -206,7 +254,7 @@ exports.getPostMylikes = function(req, res) {
                 res.send(JSON.parse(JSON.stringify(docs)));
               });
         } else {
-          res.status(400).send('No liked post');
+          res.status(400).send({error: 'get my liked post error'});
         }
       });
 };

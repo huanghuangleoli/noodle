@@ -144,3 +144,7 @@ createIndexForPost();
 createIndexForElement();
 
 // mongoimport --db test --collection elements --file elements.json
+// mongoimport --db test --collection posts --file posts.json
+// mongoimport --db test --collection sells --file sells.json
+// mongoimport --db test --collection vendors --file vendors.json
+// mongoimport --db test --collection users --file users.json

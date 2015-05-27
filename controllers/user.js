@@ -101,7 +101,7 @@ exports.logout = function(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
     res.setHeader('Access-Control-Allow-Credential', true);
-    res.send({succeed: 'user is logged out'});
+    res.send({success: 'user is logged out'});
     return;
   }
   res.status(400).send({error: 'please login'});
@@ -117,7 +117,7 @@ exports.getLogin = function(req, res) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
     res.setHeader('Access-Control-Allow-Credential', true);
-    res.send({succeed: 'user was already logged in', token: req.user.password});
+    res.send({success: 'user was already logged in', token: req.user.password});
     return;
   }
   res.status(400).send({error: 'please login'});
@@ -154,7 +154,7 @@ exports.postLogin = function(req, res) {
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
       res.setHeader('Access-Control-Allow-Headers', 'x-requested-with');
       res.setHeader('Access-Control-Allow-Credential', true);
-      res.send({succeed: 'user is logged in', token: user.password});
+      res.send({success: 'user is logged in', token: user.password});
     });
   })(req, res);
 };
@@ -201,7 +201,7 @@ exports.postSignup = function(req, res) {
           res.status(400).send({error: 'login error'});
           return;
         }
-        res.send({succeed: 'user is created and logged in', token: req.user.password});
+        res.send({success: 'user is created and logged in', token: req.user.password});
       });
     });
   });
@@ -253,7 +253,7 @@ exports.postUpdateProfile = function(req, res) {
         res.status(400).send({error: 'saving profile error'});
         return;
       }
-      res.send({succeed: 'account profile is updated'});
+      res.send({success: 'account profile is updated'});
     });
   });
 };
@@ -286,7 +286,7 @@ exports.postUpdatePassword = function(req, res) {
         res.status(400).send({error: 'change password error'});
         return;
       }
-      res.send({succeed: 'password is updated'});
+      res.send({success: 'password is updated'});
     });
   });
 };
@@ -302,7 +302,7 @@ exports.postDeleteAccount = function(req, res) {
       return;
     }
     req.logout();
-    res.send({succeed: 'account is deleted'});
+    res.send({success: 'account is deleted'});
   });
 };
 

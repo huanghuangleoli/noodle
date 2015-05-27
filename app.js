@@ -112,6 +112,7 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 // posts.js
 app.get('/posts', postController.getPost);
 app.post('/posts', passportConf.isAuthenticated, postController.postPost);
+app.put('/posts', passportConf.isAuthenticated, postController.putPost);
 app.get('/posts/mylikes', passportConf.isAuthenticated, postController.getPostMylikes);
 app.get('/posts/myposts', passportConf.isAuthenticated, postController.getPostMyposts);
 
